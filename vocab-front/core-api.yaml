@@ -1,0 +1,784 @@
+---
+openapi: 3.0.3
+info:
+  title: vocab-core API
+  version: 1.0.0-SNAPSHOT
+paths:
+  /user:
+    put:
+      tags:
+      - User Resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    post:
+      tags:
+      - User Resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPost'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /user/-/auth:
+    post:
+      tags:
+      - User Resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HandleAndPassword'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /user/-/uuid:
+    post:
+      tags:
+      - User Resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UUID'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /vocab-item:
+    get:
+      tags:
+      - Vocab Item Resource
+      parameters:
+      - name: parent
+        in: query
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VocabItem'
+    post:
+      tags:
+      - Vocab Item Resource
+      parameters:
+      - name: parent
+        in: query
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VocabItemPayload'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocabItem'
+  /vocab-item/{id}:
+    get:
+      tags:
+      - Vocab Item Resource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: parent
+        in: query
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocabItem'
+    put:
+      tags:
+      - Vocab Item Resource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: parent
+        in: query
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VocabItemPayload'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocabItem'
+    delete:
+      tags:
+      - Vocab Item Resource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: parent
+        in: query
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "204":
+          description: No Content
+  /vocab-item/{vocab-item-id}/event:
+    post:
+      tags:
+      - Vocab Item Event Register
+      parameters:
+      - name: vocab-item-id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VocabItemEventEntity'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocabItemEventResponse'
+  /vocab-set:
+    get:
+      tags:
+      - Vocab Set Resource
+      parameters:
+      - name: parent
+        in: query
+        schema:
+          $ref: '#/components/schemas/UUID'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VocabSet'
+    post:
+      tags:
+      - Vocab Set Resource
+      parameters:
+      - name: parent
+        in: query
+        schema:
+          $ref: '#/components/schemas/UUID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VocabSetPayload'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocabSet'
+  /vocab-set/{id}:
+    get:
+      tags:
+      - Vocab Set Resource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: parent
+        in: query
+        schema:
+          $ref: '#/components/schemas/UUID'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocabSet'
+    put:
+      tags:
+      - Vocab Set Resource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: parent
+        in: query
+        schema:
+          $ref: '#/components/schemas/UUID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VocabSetPayload'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocabSet'
+    delete:
+      tags:
+      - Vocab Set Resource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: parent
+        in: query
+        schema:
+          $ref: '#/components/schemas/UUID'
+      responses:
+        "204":
+          description: No Content
+  /words:
+    post:
+      tags:
+      - Word Resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Query'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VocabItem'
+components:
+  schemas:
+    CalendarDate:
+      type: object
+      properties:
+        era:
+          $ref: '#/components/schemas/Era'
+        year:
+          format: int32
+          type: integer
+        month:
+          format: int32
+          type: integer
+        dayOfMonth:
+          format: int32
+          type: integer
+        dayOfWeek:
+          format: int32
+          type: integer
+        leapYear:
+          type: boolean
+        hours:
+          format: int32
+          type: integer
+        minutes:
+          format: int32
+          type: integer
+        seconds:
+          format: int32
+          type: integer
+        millis:
+          format: int32
+          type: integer
+        fraction:
+          format: int64
+          type: integer
+        normalized:
+          type: boolean
+        zoneinfo:
+          $ref: '#/components/schemas/TimeZone'
+        zoneOffset:
+          format: int32
+          type: integer
+        daylightSaving:
+          format: int32
+          type: integer
+        forceStandardTime:
+          type: boolean
+        locale:
+          $ref: '#/components/schemas/Locale'
+        timeOfDay:
+          format: int64
+          type: integer
+        standardTime:
+          type: boolean
+        daylightTime:
+          type: boolean
+        zone:
+          $ref: '#/components/schemas/TimeZone'
+    Date:
+      type: object
+      properties:
+        era:
+          $ref: '#/components/schemas/Era'
+        year:
+          format: int32
+          type: integer
+        month:
+          format: int32
+          type: integer
+        dayOfMonth:
+          format: int32
+          type: integer
+        dayOfWeek:
+          format: int32
+          type: integer
+        leapYear:
+          type: boolean
+        hours:
+          format: int32
+          type: integer
+        minutes:
+          format: int32
+          type: integer
+        seconds:
+          format: int32
+          type: integer
+        millis:
+          format: int32
+          type: integer
+        fraction:
+          format: int64
+          type: integer
+        normalized:
+          type: boolean
+        zoneinfo:
+          $ref: '#/components/schemas/TimeZone'
+        zoneOffset:
+          format: int32
+          type: integer
+        daylightSaving:
+          format: int32
+          type: integer
+        forceStandardTime:
+          type: boolean
+        locale:
+          $ref: '#/components/schemas/Locale'
+        timeOfDay:
+          format: int64
+          type: integer
+        standardTime:
+          type: boolean
+        daylightTime:
+          type: boolean
+        zone:
+          $ref: '#/components/schemas/TimeZone'
+        cachedYear:
+          format: int32
+          type: integer
+        cachedFixedDateJan1:
+          format: int64
+          type: integer
+        cachedFixedDateNextJan1:
+          format: int64
+          type: integer
+        normalizedYear:
+          format: int32
+          type: integer
+        cachedJan1:
+          format: int64
+          type: integer
+    Era:
+      type: object
+      properties:
+        name:
+          type: string
+        abbr:
+          type: string
+        since:
+          format: int64
+          type: integer
+        sinceDate:
+          $ref: '#/components/schemas/CalendarDate'
+        localTime:
+          type: boolean
+        hash:
+          format: int32
+          type: integer
+        abbreviation:
+          type: string
+    HandleAndPassword:
+      required:
+      - handle
+      - password
+      type: object
+      properties:
+        handle:
+          pattern: \S
+          type: string
+        password:
+          pattern: \S
+          type: string
+    Language:
+      enum:
+      - en
+      - nl
+      - hu
+      type: string
+    Locale:
+      type: object
+      properties:
+        language:
+          type: string
+        script:
+          type: string
+        country:
+          type: string
+        variant:
+          type: string
+        extensionKeys:
+          uniqueItems: true
+          type: array
+          items:
+            format: byte
+            type: string
+        unicodeLocaleAttributes:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        unicodeLocaleKeys:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        iSO3Language:
+          type: string
+        iSO3Country:
+          type: string
+        displayLanguage:
+          type: string
+        displayScript:
+          type: string
+        displayCountry:
+          type: string
+        displayVariant:
+          type: string
+        displayName:
+          type: string
+    Mode:
+      enum:
+      - OLD_WORDS
+      - NEW_WORDS
+      - WEAK_WORDS
+      type: string
+    Query:
+      required:
+      - ownerUUID
+      - known
+      - learnt
+      - mode
+      - amount
+      type: object
+      properties:
+        ownerUUID:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          - pattern: \S
+        known:
+          allOf:
+          - $ref: '#/components/schemas/Language'
+          - pattern: \S
+        learnt:
+          allOf:
+          - $ref: '#/components/schemas/Language'
+          - pattern: \S
+        mode:
+          allOf:
+          - $ref: '#/components/schemas/Mode'
+          - pattern: \S
+        amount:
+          format: int32
+          maximum: 20
+          minimum: 1
+          type: integer
+    TimeZone:
+      type: object
+      properties:
+        ID:
+          type: string
+        rawOffset:
+          format: int32
+          type: integer
+        iD:
+          type: string
+        displayName:
+          type: string
+        dSTSavings:
+          format: int32
+          type: integer
+    Timestamp:
+      type: object
+      properties:
+        year:
+          format: int32
+          type: integer
+          deprecated: true
+        month:
+          format: int32
+          type: integer
+          deprecated: true
+        date:
+          format: int32
+          type: integer
+          deprecated: true
+        day:
+          format: int32
+          type: integer
+          deprecated: true
+        hours:
+          format: int32
+          type: integer
+          deprecated: true
+        minutes:
+          format: int32
+          type: integer
+          deprecated: true
+        seconds:
+          format: int32
+          type: integer
+          deprecated: true
+        timeImpl:
+          format: int64
+          type: integer
+        timezoneOffset:
+          format: int32
+          type: integer
+          deprecated: true
+        calendarDate:
+          $ref: '#/components/schemas/Date'
+        nanos:
+          format: int32
+          type: integer
+        time:
+          format: int64
+          type: integer
+    Type:
+      enum:
+      - MANUAL_FEEDBACK
+      - Q_CHOICE_4
+      - Q_CHOICE_4_BAD_ALT
+      - Q_FREE_TEXT
+      type: string
+    UUID:
+      format: uuid
+      pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+      type: string
+    User:
+      required:
+      - name
+      - handle
+      - uuid
+      type: object
+      properties:
+        name:
+          pattern: \S
+          type: string
+        handle:
+          pattern: \S
+          type: string
+        uuid:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          - pattern: \S
+    UserPost:
+      required:
+      - name
+      - handle
+      type: object
+      properties:
+        name:
+          pattern: \S
+          type: string
+        handle:
+          pattern: \S
+          type: string
+    UserUpdate:
+      required:
+      - uuid
+      - name
+      type: object
+      properties:
+        uuid:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          - pattern: \S
+        name:
+          pattern: \S
+          type: string
+    VocabItem:
+      required:
+      - id
+      - known
+      - learnt
+      - confidence
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        known:
+          $ref: '#/components/schemas/Word'
+        learnt:
+          $ref: '#/components/schemas/Word'
+        confidence:
+          format: double
+          type: number
+        lastDirectEvent:
+          $ref: '#/components/schemas/VocabItemEventEntity'
+    VocabItemEventEntity:
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        ts:
+          $ref: '#/components/schemas/Timestamp'
+        success:
+          type: boolean
+        direct:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/Type'
+        confidenceSnapshot:
+          format: double
+          type: number
+    VocabItemEventResponse:
+      required:
+      - confidence
+      type: object
+      properties:
+        confidence:
+          format: double
+          type: number
+    VocabItemPayload:
+      required:
+      - known
+      - learnt
+      type: object
+      properties:
+        known:
+          $ref: '#/components/schemas/Word'
+        learnt:
+          $ref: '#/components/schemas/Word'
+    VocabSet:
+      required:
+      - id
+      - upToDate
+      - state
+      - known
+      - learnt
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        upToDate:
+          type: boolean
+        state:
+          $ref: '#/components/schemas/VocabSetState'
+        known:
+          $ref: '#/components/schemas/Language'
+        learnt:
+          $ref: '#/components/schemas/Language'
+    VocabSetPayload:
+      required:
+      - known
+      - learnt
+      - state
+      type: object
+      properties:
+        known:
+          $ref: '#/components/schemas/Language'
+        learnt:
+          $ref: '#/components/schemas/Language'
+        state:
+          $ref: '#/components/schemas/VocabSetState'
+    VocabSetState:
+      enum:
+      - HIDDEN
+      - DISABLED
+      - ENABLED
+      type: string
+    Word:
+      required:
+      - word
+      type: object
+      properties:
+        word:
+          pattern: \S
+          type: string
+        bracketInfo:
+          type: string

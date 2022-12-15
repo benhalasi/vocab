@@ -1,0 +1,51 @@
+quarkus:
+  live-reload:
+    instrumentation: true
+  log:
+    level: INFO
+  container-image:
+    build: true
+    insecure: true
+    # eu.gcr.io/peak-bebop-370821/vocab-core:latest
+    registry: localhost:5000
+  kubernetes:
+    # service-type: node-port
+    # node-port: 30010
+    env:
+      secrets:
+        - postgres-secret
+      configmaps:
+        - postgres-config
+      mapping:
+        database-name:
+          from-configmap: postgres-config
+          with-key: postgres-db
+        database-url:
+          from-configmap: postgres-config
+          with-key: postgres-url
+        database-user:
+          from-secret: postgres-secret
+          with-key: postgres-user
+        database-password:
+          from-secret: postgres-secret
+          with-key: postgres-pass
+  datasource:
+    db-kind: postgresql
+    username: ${database-user}
+    password: ${database-password}
+    reactive:
+      url: vertx-reactive:postgresql://${database-url}:80/${database-name}?createDatabaseIfNotExist=true
+  hibernate-orm:
+    database:
+      generation: update
+"%dev":
+  quarkus:
+    datasource:
+      db-kind: postgresql
+      username: postgres
+      password: password
+      reactive:
+        url: vertx-reactive:postgresql://localhost:5432/local-dev?createDatabaseIfNotExist=true
+    hibernate-orm:
+      database:
+        generation: update

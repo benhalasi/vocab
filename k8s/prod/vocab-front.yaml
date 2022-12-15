@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vocab-front-deployment
+  labels:
+    app: vocab-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vocab-front
+  template:
+    metadata:
+      labels:
+        app: vocab-front
+    spec:
+      containers:
+      - name: vocab-front
+        image: eu.gcr.io/peak-bebop-370821/vocab-front:latest
+        imagePullPolicy: "Always"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+        env:
+          - name: WOCABB__CORE_BASE_PATH
+            value: http://vocab-core:80
+          - name: WOCABB__MDLW_SECRET
+            value: wrnFyEytpYZENbV=kCCnr9cZtzRry90GLPJro7XLvpGRlacZ
+          - name: WOCABB__MDLW_SUPERU
+            value: benph
+        livenessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /api/health/live
+            port: 3000
+            scheme: HTTP
+          initialDelaySeconds: 1
+          periodSeconds: 1
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /api/health/ready
+            port: 3000
+            scheme: HTTP
+          initialDelaySeconds: 0
+          periodSeconds: 1
+          successThreshold: 1
+          timeoutSeconds: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vocab-front-service
+spec:
+  selector:
+    app: vocab-front
+  ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+  type: ClusterIP
