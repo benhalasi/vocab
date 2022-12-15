@@ -1,5 +1,7 @@
 # Vocab - Foreign Vocabulary Learning App
 
+should be available [here](https://vocab.benedek.dev/). Registration is disabled, since it runs on a free GCP machine, if you want to try it, throw me a mail.
+
 ## tech stuff
 
 ### kubernetes
