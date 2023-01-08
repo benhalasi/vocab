@@ -30,7 +30,7 @@
     "@types/eslint": "8.4.10",
     "@types/express": "4.17.13",
     "@types/node": "latest",
-    "@types/uuid": "^8.3.4",
+    "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "5.45.0",
     "@typescript-eslint/parser": "5.48.0",
     "autoprefixer": "10.4.11",
