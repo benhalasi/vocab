@@ -48,4 +48,4 @@ quarkus:
         url: vertx-reactive:postgresql://localhost:5432/local-dev?createDatabaseIfNotExist=true
     hibernate-orm:
       database:
-        generation: update
+        generation: drop-and-create
