@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.9",
-    "daisyui": "^2.46.1",
+    "daisyui": "^2.47.0",
     "heroicons-qwikjs": "^0.0.1",
     "uuid": "^9.0.0"
   }
